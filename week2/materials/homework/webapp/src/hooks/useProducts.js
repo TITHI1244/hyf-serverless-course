@@ -38,16 +38,24 @@ function useProducts() {
   const [products] = useState(initialProducts);
   const [cart, setCart] = useState([]);
 
+  const calculateSum = () => {
+    let price = 0;
+    price = cart.map(item => item.price).reduce(((prevValue, currentValue) => Number(prevValue) + Number(currentValue)), 0);
+    return price;
+  }
+
   const addProduct = (product) => {
     let newCart = cart.concat(product);
     setCart(newCart);
   };
 
   const removeProduct = (product) => {
-    setCart(cart.filter((item) => item.id != product.id));
+    setCart(cart.filter((item) => item.id !== product.id));
   };
 
-  return { products, cart, addProduct, removeProduct };
+  let totalPrice = calculateSum();
+
+  return { products, cart, addProduct, removeProduct, totalPrice };
 }
 
 export default useProducts;
