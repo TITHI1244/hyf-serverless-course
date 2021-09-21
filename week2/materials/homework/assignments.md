@@ -4,7 +4,8 @@
 
 Sync your changes to s3 and write down your s3 bucket url.
 
-bucket url: `https://s3.console.aws.amazon.com/s3/buckets/g3-week2-tithi?region=us-east-1&tab=objects`
+bucket url: `https://s3.console.aws.amazon.com/s3/buckets/g3-week2-tithi?region=us-east-1&tab=objects` 
+website url: `https://s3.console.aws.amazon.com/s3/buckets/g3-week2-tithi?region=us-east-1&tab=objects`
 
 **Assignment 5:**
 
