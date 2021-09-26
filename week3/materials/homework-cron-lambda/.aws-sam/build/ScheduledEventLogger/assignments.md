@@ -13,7 +13,7 @@ value: `AWS::Serverless::Function`
 doc: `https://docs.aws.amazon.com/cli/latest/reference/lambda/list-functions.html`
 
 **Assignment 3:**
-rubbish string: `Ifmmp-!IZG\`
+rubbish string: `?`
 
 **Assignment 4:**
 total count: `?`
