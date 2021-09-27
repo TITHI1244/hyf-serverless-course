@@ -1,15 +1,13 @@
 import Products from "./components/Products";
 import Header from "./components/Header";
-import useNotifications from "./hooks/useNotification";
+import "./index.css";
 
 function App() {
-  const { notifications } = useNotifications();
-
   return (
     <div className="container">
       <Header />
-      <h1 className="text-white">Good Green Groceries</h1>
-      <Products />
+      <h1>Good Green Groceries</h1>
+      <Products />      
     </div>
   );
 }

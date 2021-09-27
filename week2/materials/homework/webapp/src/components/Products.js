@@ -1,7 +1,20 @@
 import useProducts from "../hooks/useProducts";
+import useNotifications from "../hooks/useNotification";
+import NotificationModal from "./NotificationModal";
 
 function Products() {
-  const { products, cart, addProduct, removeProduct } = useProducts();
+  const { products, cart, addProduct, removeProduct, totalPrice } = useProducts();
+  const { notifications, createNotification } = useNotifications();
+
+  const addProductToCart = (product) => {
+    addProduct(product);
+    createNotification(`Thanks for adding ${product.name}`);
+  }
+
+  const removeProductFromCart = (product) => {
+    removeProduct(product);
+    createNotification(`The product - ${product.name} has been removed`);
+  }
 
   const isInCart = (product) => {
     return !cart.find((item) => item.id === product.id);
@@ -10,62 +23,62 @@ function Products() {
   return (
     <div>
       <div className="row">
-        {products.map((product) => {
-          return (
-            <div className="card col-md-4" key={product.id}>
-              <div className="text-center">
-                <img style={{ width: "400px" }} src={product.imageURL} />
-              </div>
-              <div className="card-body">
-                <h2>{product.name}</h2>
+            {products.map((product) => {
+              return (
+                <div className="card col-md-4" key={product.id}>
+                  <div className="text-center">
+                    <img style={{ width: "400px" }} alt="url" src={product.imageURL} />
+                  </div>
+                  <div className="card-body">
+                    <h2>{product.name}</h2>
+                    <p className="card-text">{product.description}</p>
+                    <p>
+                      <strong>
+                        price: {product.price} {product.currency}
+                      </strong>
+                    </p>
+                    {isInCart(product) && (
+                      <button
+                        onClick={() => addProductToCart(product)}
+                        className="btn btn-primary"
+                      >
+                        Select
+                      </button>
+                    )}
+                    {!isInCart(product) && (
+                      <button
+                        onClick={() => removeProductFromCart(product)}
+                        className="btn btn-danger"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <form>
+            <div className="form-group mt-4 col-md-4">
+              <p className="mt-4">You will be charged: {totalPrice} DKK</p>
 
-                <p className="card-text">{product.description}</p>
-                <p>
-                  <strong>
-                    price: {product.price} {product.currency}
-                  </strong>
-                </p>
-                {isInCart(product) && (
-                  <button
-                    onClick={() => addProduct(product)}
-                    className="btn btn-primary"
-                  >
-                    Select
-                  </button>
-                )}
-                {!isInCart(product) && (
-                  <button
-                    onClick={() => removeProduct(product)}
-                    className="btn btn-danger"
-                  >
-                    Remove
-                  </button>
-                )}
-              </div>
+              <label htmlFor="exampleInputEmail1">Email address</label>
+              <input
+                type="email"
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+              />
+              <small id="emailHelp" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
             </div>
-          );
-        })}
-      </div>
-      <form>
-        <div className="form-group mt-4 col-md-4">
-          <p className="mt-4">You will be charged: ?</p>
-
-          <label htmlFor="exampleInputEmail1">Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-          />
-          <small id="emailHelp" className="form-text text-muted">
-            We'll never share your email with anyone else.
-          </small>
-        </div>
-        <button type="submit" className="btn btn-primary mt-3">
-          Buy now
-        </button>
-      </form>
+            <button type="submit" className="btn btn-primary mt-3">
+              Buy now
+            </button>
+          </form>
+        {notifications[0] && <NotificationModal text={notifications[0]} />}
     </div>
   );
 }
